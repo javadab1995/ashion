@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    background-color: #fdfcfc;
+    
+}
+
+
+@layer components {
+  .input {
+    @apply  rounded-full border border-stone-200 relative
+             text-sm transition-all duration-300 
+             focus:outline-none focus:ring focus:ring-indigo-600
+             px-16 py-4
+              
+  }
+}
+
+.filtercategory details {
+  transition: 0.2s background linear;
+  margin-top: 5px;
+ 
+}
+
+
+
+.filtercategory summary::after {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-top: 6px solid #8775b9;
+  border-inline: 4px solid transparent;
+  transition: 0.2s;
+}
+
+
+
+.filtercategory details[open] > summary::after {
+  transform: rotate(-180deg);
+}
+
+.filtercategory summary::-webkit-details-marker {
+  display: none;
+}
+
+
+
+
+
+.filtercategory article > *:first-child {margin: 0;}
+.filtercategory article > * + * {margin: 0.2px 0 0 0; }
+
+
+.filtercategory details code {font-size: 1.1em;}
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+}
+.loader::before,
+.loader::after {    
+  content:"";
+  grid-area: 1/1;
+  --c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
+  background: 
+    var(--c) 50%  0, 
+    var(--c) 50%  100%, 
+    var(--c) 100% 50%, 
+    var(--c) 0    50%;
+  background-size: 12px 12px;
+  animation: l12 1s infinite;
+}
+.loader::before {
+  margin: 4px;
+  filter: hue-rotate(45deg);
+  background-size: 8px 8px;
+  animation-timing-function: linear
+}
+
+@keyframes l12 { 
+  100%{transform: rotate(.5turn)}
+}
+
+.img {
+  --c: rgb(165 180 252); /* the border color */
+  --b: 4px;    /* the border thickness*/
+  --g: 5px;     /* the gap on hover */
+  
+  padding: calc(var(--g + 5px) + var(--b + 4px));
+  --_g: #0000 25%,var(--c) 0;
+  background: 
+    conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
+     var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
+    conic-gradient(            at bottom var(--b) left  var(--b),var(--_g))
+     0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat;
+  transition: .3s, background-position .3s .3s;
+  cursor: pointer;
+}
+.img:hover {
+  --_i: 100%;
+  transition: .3s, background-size .3s .3s;
+  
+}
+
+.scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
