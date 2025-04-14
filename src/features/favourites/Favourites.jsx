@@ -1,7 +1,7 @@
 
 import { useSelector } from "react-redux"
 import { getFavourit } from "./FavouritesSlice"
-import FavouritesItem from "./favouritesItem";
+import FavouritesItem from "./FavouritesItem";
 import Header from "../../ui/Header";
 import MobileHeader from "../../ui/MobileHeder";
 import Footer from "../../ui/Footer";
