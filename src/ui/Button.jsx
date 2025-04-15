@@ -32,7 +32,7 @@ function Button({ children, type, goToSlide, currentIndex, onClick }) {
     return (
       <button
         onClick={onClick}
-        className="text-indigo-950 text-center img flex justify-self-center p-4 font-bold w-3/12 gap-2 "
+        className="text-orange-800 text-center img flex  p-4 font-bold  gap-2 "
       >
         {children}
       </button>

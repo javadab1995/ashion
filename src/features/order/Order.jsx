@@ -6,8 +6,9 @@ import { formatCurrency } from "../../utils/helpers";
 import Button from "../../ui/Button";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { IoArrowBackCircleOutline } from "react-icons/io5";
+
 import { FiCopy } from "react-icons/fi";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 function Order() {
   const { id} = useParams();
@@ -17,11 +18,6 @@ function Order() {
   const navigate = useNavigate();
 
   const order = orders.find((order) => order.id === id);
-
-  function handleBackToShop() {
-  dispatch(cleareCart()); 
-  navigate("/shop");      
-}
 
 
   function handleFinalOrder() {
@@ -61,9 +57,16 @@ function Order() {
 
   return (
     <div>
-      <div key={order.id} className="flex flex-col p-2 lg:p-10 mt-10 w-full lg:w-8/12">
+      <div
+        key={order.id}
+        className="flex flex-col p-2 lg:p-10  w-full lg:w-8/12"
+      >
         <div className="w-full">
-          <div className="md:w-4/12 w-full">
+          <Button onClick={() => navigate("/shop")} type="back">
+            Back to shop <IoArrowBackCircleOutline size="22px" />
+          </Button>
+          <div className="md:w-4/12 w-full mt-20">
+            <div className="w-8/12 flex justify-self-center items-center"></div>
             <span className="flex gap-2 items-center text-indigo-950 text-2xl border-4 p-2">
               Order ID:
               <p className="font-bold">{order.id}</p>
@@ -119,12 +122,6 @@ function Order() {
             Confirmation And Payment
           </Button>
         </div>
-      </div>
-
-      <div className="w-4/12 flex justify-center items-center">
-        <Button onClick={handleBackToShop} type="back">
-          Back to shop <IoArrowBackCircleOutline size="22px" />
-        </Button>
       </div>
     </div>
   );

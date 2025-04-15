@@ -24,7 +24,7 @@ function MobileHeader() {
           </div>
           <Logo />
 
-          <Link to="cart" className="hover:text-red-700 relative">
+          <Link to="/cart" className="hover:text-red-700 relative">
             <CiShoppingCart size="40px" />
             <div className="absolute rounded-full w-[20px] h-[20px] bg-red-700 text-center top-[-12px] right-5 text-red-50 text-[10px]">
               {totalCartQuantity}

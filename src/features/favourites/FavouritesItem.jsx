@@ -33,7 +33,7 @@ function FavouritesItem({ favourites }) {
 
 
     return (
-      <div className="  space-y-4 p-4 ">
+      <div className="space-y-4 p-4 ">
         <div
           className="p-2 w-[200px] h-[250px] bg-no-repeat bg-cover bg-center"
           style={{ backgroundImage: `url(${images[0]})` }}
