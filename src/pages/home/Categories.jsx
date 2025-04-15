@@ -6,7 +6,7 @@ function Categories() {
       <section className="mt-5">
         <div className="flex flex-col lg:flex-row gap-3  h-auto">
           <div className="w-full lg:w-1/2 h-[638px]">
-            <div className="bg-[url(./images/category-1.jpg)] w-full h-full flex flex-col items-start justify-center px-16 gap-5 lg:bg-center ">
+            <div className="bg-[url(/images/category-1.jpg)] w-full h-full flex flex-col items-start justify-center px-16 gap-5 lg:bg-center ">
               <h2 className="text-5xl font-bold font-shop">Women’s fashion</h2>
               <p className="max-w-md text-medium text-slate-400">
                 Sitamet, consectetur adipiscing elit, sed do eiusmod tempor
