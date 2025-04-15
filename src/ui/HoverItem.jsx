@@ -39,7 +39,7 @@ function HoverItem({ product }) {
     dispatch(addItemFavourit(newItem))
   }
   return (
-    <div className="flex justify-between items-end w-full p-5 h-full transition-all duration-200  ">
+    <div className="xl:flex justify-between items-end w-full p-5 h-full transition-all duration-200 hidden  ">
       <div
         onClick={handleAddToCart}
         className="p-3 rounded-full bg-lime-700 hover:bg-lime-600 "

@@ -9,7 +9,7 @@ function CartItem({ item }) {
 ;
   
   return (
-    <div className="flex xl:flex-row flex-col gap-10 p-4  lg:w-full w-1/2  ">
+    <div className="flex xl:flex-row flex-col gap-10 p-4  w-full md:w-1/2 lg:w-full  ">
       <img
         className="w-[300px] h-[300px] rounded-xl"
         src={item.images[0]}
