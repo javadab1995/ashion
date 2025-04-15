@@ -8,7 +8,6 @@ export default {
       present: "Delicious Handrawn",
       link: "Piedra",
     },
-
     extend: {
       fontSize: {
         huge: ["80rem", { lineHeight: "1" }],

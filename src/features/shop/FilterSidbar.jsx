@@ -32,13 +32,6 @@ function FilterSidbar() {
           )}
         </ul>
 
-        <div className="mt-20 w-full ">
-          <h2 className="uppercase font-semibold text-xl text-indigo-950 ">
-            <span className="border-b-2 border-red-700">Shop By </span>
-            Price
-          </h2>
-         
-        </div>
       </div>
     );
 }
