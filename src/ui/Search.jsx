@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
@@ -9,26 +10,40 @@ function Search() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!query.trim()) {
+
+    const orderId = query.trim();
+
+    if (!orderId) {
       toast.error("لطفاً کد سفارش را وارد کنید!");
       return;
     }
-    navigate(`/order/${query}`);
-    setQuery(""); 
+
+    navigate(`/order/${encodeURIComponent(orderId)}`);
+    setQuery("");
   }
 
   return (
-    <div className="relative">
-      <form onSubmit={handleSubmit}>
+    <div dir="rtl" className="w-full">
+      <form
+        onSubmit={handleSubmit}
+        role="search"
+        className="relative w-full"
+      >
         <input
-          className="rounded-full px-4 py-2 text-sm placeholder:text-indigo-700 w-24 sm:w-64 transition-all duration-300 md:focus:w-72 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-indigo-50 shadow-md pr-10"
-          placeholder="Search by Order ID..."
+          type="text"
+          name="orderId"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          placeholder="جست‌وجو با کد سفارش..."
+          aria-label="کد سفارش"
+          autoComplete="off"
+          className=" rounded-full border border-input bg-surface-alt py-2 pr-10 pl-4 text-sm text-text-h shadow-sm transition-all duration-300 placeholder:text-text-muted w-24 focus:border-primary focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:w-52"
         />
+
         <button
           type="submit"
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-indigo-600"
+          aria-label="جست‌وجوی سفارش"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-primary"
         >
           <FiSearch size={18} />
         </button>

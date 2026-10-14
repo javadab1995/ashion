@@ -1,112 +1,446 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body{
-    background-color: #fdfcfc;
-    
+/* ========================================
+   Tailwind Theme Tokens
+======================================== */
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-UltraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-DemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-ExtraBlack.woff2") format("woff2");
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IRANYekanX";
+  src: url("/fonts/IRANYekanX-Heavy.woff2") format("woff2");
+  font-weight: 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "IRANYekanX", sans-serif;
 }
 
 
-@layer components {
-  .input {
-    @apply  rounded-full border border-stone-200 relative
-             text-sm transition-all duration-300 
-             focus:outline-none focus:ring focus:ring-indigo-600
-             px-16 py-4
-              
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+
+  --color-text: var(--text);
+  --color-text-h: var(--text-h);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-bg: var(--primary-bg);
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-bg: var(--secondary-bg);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-code: var(--code-bg);
+
+  --shadow-card: var(--card-shadow);
+  --shadow-btn: var(--btn-shadow);
+}
+
+/* ========================================
+   Light Theme
+======================================== */
+
+:root {
+  color-scheme: light;
+
+  --bg: #FFFAF9;
+  --surface: #FFFFFF;
+  --surface-alt: #FFF1EF;
+
+  --text: #78666B;
+  --text-h: #271D20;
+  --text-muted: #9A858B;
+  --text-inverse: #FFFFFF;
+
+  --primary: #D94F61;
+  --primary-hover: #BE394D;
+  --primary-bg: #FCE7E7;
+  --primary-border: #F2C4CA;
+
+  --secondary: #E9825F;
+  --secondary-bg: #FFF0E8;
+
+  --border: #EEDFE1;
+  --input: #E8D9DC;
+  --code-bg: #F6EEEB;
+
+  --card-shadow:
+    0 4px 20px rgba(75, 35, 43, 0.05);
+
+  --btn-shadow:
+    0 4px 12px rgba(217, 79, 97, 0.18);
+}
+
+/* ========================================
+   Dark Theme
+======================================== */
+
+:root.dark {
+  color-scheme: dark;
+
+  --bg: #191719;
+  --surface: #242025;
+  --surface-alt: #30252B;
+
+  --text: #B8A7AE;
+  --text-h: #F7EFF1;
+  --text-muted: #9B8991;
+  --text-inverse: #271D20;
+
+  --primary: #F0717D;
+  --primary-hover: #F58A94;
+  --primary-bg: #49252D;
+  --primary-border: #713640;
+
+  --secondary: #F18A65;
+  --secondary-bg: #422C29;
+
+  --border: #40363D;
+  --input: #4B3C44;
+  --code-bg: #292329;
+
+  --card-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.18);
+
+  --btn-shadow:
+    0 4px 14px rgba(240, 113, 125, 0.14);
+}
+
+/* ========================================
+   Base Styles
+======================================== */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+     font-family: "IRANYekanX", sans-serif;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "IRANYekanX", sans-serif;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-h);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background: var(--primary-bg);
+    color: var(--text-h);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
   }
 }
 
-.filtercategory details {
-  transition: 0.2s background linear;
-  margin-top: 5px;
- 
-}
+/* ========================================
+   Reusable Components
+======================================== */
 
-
-
-.filtercategory summary::after {
-  content: '';
-  width: 0; 
-  height: 0; 
-  border-top: 6px solid #8775b9;
-  border-inline: 4px solid transparent;
-  transition: 0.2s;
-}
-
-
-
-.filtercategory details[open] > summary::after {
-  transform: rotate(-180deg);
-}
-
-.filtercategory summary::-webkit-details-marker {
-  display: none;
-}
-
-
-
-
-
-.filtercategory article > *:first-child {margin: 0;}
-.filtercategory article > * + * {margin: 0.2px 0 0 0; }
-
-
-.filtercategory details code {font-size: 1.1em;}
-
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
+/* ========================================
+   Loading Spinner
+======================================== */
+/* From Uiverse.io by andrew-manzyk */ 
 .loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
+  --color-one: #ffbf48;
+  --color-two: #be4a1d;
+  --color-three: #ffbf4780;
+  --color-four: #bf4a1d80;
+  --color-five: #ffbf4740;
+  --time-animation: 2s;
+  --size: 1; /* You can change the size */
+  position: relative;
+  border-radius: 50%;
+  transform: scale(var(--size));
+  box-shadow:
+    0 0 25px 0 var(--color-three),
+    0 20px 50px 0 var(--color-four);
+  animation: colorize calc(var(--time-animation) * 3) ease-in-out infinite;
 }
-.loader::before,
-.loader::after {    
-  content:"";
-  grid-area: 1/1;
-  --c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
-  background: 
-    var(--c) 50%  0, 
-    var(--c) 50%  100%, 
-    var(--c) 100% 50%, 
-    var(--c) 0    50%;
-  background-size: 12px 12px;
-  animation: l12 1s infinite;
-}
+
 .loader::before {
-  margin: 4px;
-  filter: hue-rotate(45deg);
-  background-size: 8px 8px;
-  animation-timing-function: linear
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border-top: solid 1px var(--color-one);
+  border-bottom: solid 1px var(--color-two);
+  background: linear-gradient(180deg, var(--color-five), var(--color-four));
+  box-shadow:
+    inset 0 10px 10px 0 var(--color-three),
+    inset 0 -10px 10px 0 var(--color-four);
 }
 
-@keyframes l12 { 
-  100%{transform: rotate(.5turn)}
+.loader .box {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(
+    180deg,
+    var(--color-one) 30%,
+    var(--color-two) 70%
+  );
+  mask: url(#clipping);
+  -webkit-mask: url(#clipping);
 }
 
-.img {
-  --c: rgb(165 180 252); /* the border color */
-  --b: 4px;    /* the border thickness*/
-  --g: 5px;     /* the gap on hover */
-  
-  padding: calc(var(--g + 5px) + var(--b + 4px));
-  --_g: #0000 25%,var(--c) 0;
-  background: 
-    conic-gradient(from 180deg at top    var(--b) right var(--b),var(--_g))
-     var(--_i,200%) 0  /200% var(--_i,var(--b))  no-repeat,
-    conic-gradient(            at bottom var(--b) left  var(--b),var(--_g))
-     0   var(--_i,200%)/var(--_i,var(--b)) 200%  no-repeat;
-  transition: .3s, background-position .3s .3s;
-  cursor: pointer;
-}
-.img:hover {
-  --_i: 100%;
-  transition: .3s, background-size .3s .3s;
-  
+.loader svg {
+  position: absolute;
 }
 
-.scrollbar::-webkit-scrollbar {
-  display: none !important;
+.loader svg #clipping {
+  filter: contrast(15);
+  animation: roundness calc(var(--time-animation) / 2) linear infinite;
+}
+
+.loader svg #clipping polygon {
+  filter: blur(7px);
+}
+
+.loader svg #clipping polygon:nth-child(1) {
+  transform-origin: 75% 25%;
+  transform: rotate(90deg);
+}
+
+.loader svg #clipping polygon:nth-child(2) {
+  transform-origin: 50% 50%;
+  animation: rotation var(--time-animation) linear infinite reverse;
+}
+
+.loader svg #clipping polygon:nth-child(3) {
+  transform-origin: 50% 60%;
+  animation: rotation var(--time-animation) linear infinite;
+  animation-delay: calc(var(--time-animation) / -3);
+}
+
+.loader svg #clipping polygon:nth-child(4) {
+  transform-origin: 40% 40%;
+  animation: rotation var(--time-animation) linear infinite reverse;
+}
+
+.loader svg #clipping polygon:nth-child(5) {
+  transform-origin: 40% 40%;
+  animation: rotation var(--time-animation) linear infinite reverse;
+  animation-delay: calc(var(--time-animation) / -2);
+}
+
+.loader svg #clipping polygon:nth-child(6) {
+  transform-origin: 60% 40%;
+  animation: rotation var(--time-animation) linear infinite;
+}
+
+.loader svg #clipping polygon:nth-child(7) {
+  transform-origin: 60% 40%;
+  animation: rotation var(--time-animation) linear infinite;
+  animation-delay: calc(var(--time-animation) / -1.5);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes roundness {
+  0% {
+    filter: contrast(15);
+  }
+  20% {
+    filter: contrast(3);
+  }
+  40% {
+    filter: contrast(3);
+  }
+  60% {
+    filter: contrast(15);
+  }
+  100% {
+    filter: contrast(15);
+  }
+}
+
+@keyframes colorize {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    filter: hue-rotate(-30deg);
+  }
+  40% {
+    filter: hue-rotate(-60deg);
+  }
+  60% {
+    filter: hue-rotate(-90deg);
+  }
+  80% {
+    filter: hue-rotate(-45deg);
+  }
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}
+
+/* ========================================
+   Image Hover Decoration
+======================================== */
+
+
+/* ========================================
+   Utilities
+======================================== */
+
+
+
+@keyframes banner-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[banner-enter_600ms_ease-out_both\] {
+    animation: none;
+  }
 }

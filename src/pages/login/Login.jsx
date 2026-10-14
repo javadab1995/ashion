@@ -1,130 +1,185 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { HiOutlineArrowLeft, HiOutlineUser } from "react-icons/hi2";
+import { CiLock, CiMail } from "react-icons/ci";
+
 import Button from "../../ui/Button";
 import Logo from "../../ui/Logo";
 import { login, updateName } from "./userSlice";
+import Input from "../../ui/Input";
+import { PiPassword } from "react-icons/pi";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(false);
   const [username, setUsername] = useState("");
-  
-
+  const [isLogin, setIsLogin] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated); 
-  
+
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/account"); 
+      navigate("/account", { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  function handleClick() {
-    setIsLogin((login) => !login);
+  function handleModeChange() {
+    setIsLogin((current) => !current);
   }
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    if (!username) return;
+    if (!email.trim() || !password.trim()) return;
 
-    dispatch(updateName(username));
-    dispatch(login(username))
-    navigate("/");
+    // این پروژه فعلاً احراز هویت واقعی ندارد.
+    // در ثبت‌نام نام را ذخیره می‌کنیم.
+    if (!isLogin) {
+      if (!username.trim()) return;
+      dispatch(updateName(username.trim()));
+    }
 
-    
-   
-  };
+    // توجه: این اکشن فعلاً ورود واقعی با ایمیل و رمز عبور نیست.
+    dispatch(login(isLogin ? email.trim() : username.trim()));
+
+    navigate("/account", { replace: true });
+  }
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center mt-10">
-      <div className="p-4 img">
+    <main
+      dir="rtl"
+      className="flex min-h-screen flex-col items-center justify-center bg-bg px-4 py-8 text-text"
+    >
+      <div className="mb-7 flex justify-center">
         <Logo />
       </div>
 
-      {/* فرم لاگین یا ثبت‌نام */}
-      {!isLogin && (
-        <div className="w-full h-full">
-          <form
-            className="w-full flex flex-col items-center justify-center lg:mt-40 md:mt-10 mt-0"
-            onSubmit={handleLogin}
-          >
-            <div className="flex flex-col justify-center items-center gap-10 px-2 bg-indigo-300 md:w-8/12 w-full rounded-xl self-center h-screen md:h-[600px]">
-              <Button onClick={handleClick} type="formbtn">
-                Sign up
-              </Button>
-              <input
-                type="text"
-                name="txt"
-                placeholder="Name"
-                onChange={(e) => setUsername(e.target.value)}
-                required=""
-                className="md:w-7/12 w-full rounded-full h-14 px-10 transition-all duration-300 focus:outline-none focus:ring focus:ring-indigo-600"
-              />
-              <input
-                type="email"
+      <section className="w-full max-w-md overflow-hidden rounded-3xl border border-border bg-surface shadow-card">
+        <div className="px-6 pb-2 pt-8 text-center sm:px-9">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-bg text-primary">
+            <HiOutlineUser size={28} />
+          </div>
+
+          <h1 className="text-2xl font-bold text-text-h">
+            {isLogin ? "خوش برگشتی!" : "ساخت حساب کاربری"}
+          </h1>
+
+          <p className="mt-2 text-sm leading-6 text-text-muted">
+            {isLogin
+              ? "برای ورود، اطلاعات حساب خود را وارد کن."
+              : "برای شروع خرید، اطلاعاتت را وارد کن."}
+          </p>
+        </div>
+
+        <div className="px-6 pb-8 pt-6 sm:px-9">
+          <div className="mb-7 grid grid-cols-2 rounded-xl bg-surface-alt p-1">
+            <button
+              type="button"
+              onClick={() => setIsLogin(false)}
+              className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
+                !isLogin
+                  ? "bg-surface text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-h"
+              }`}
+            >
+              ثبت‌نام
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsLogin(true)}
+              className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
+                isLogin
+                  ? "bg-surface text-primary shadow-sm"
+                  : "text-text-muted hover:text-text-h"
+              }`}
+            >
+              ورود
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {!isLogin && (
+              <div>
+                <Input
+                  label="نام کاربری"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  icon={HiOutlineUser}
+                  placeholder="نام خود را وارد کن"
+                  inputClassName="h-14 rounded-2xl  focus:ring-4 focus:ring-primary/10"
+                />
+              </div>
+            )}
+
+            <div>
+              <Input
+                label="ایمیل"
                 name="email"
                 value={email}
+                type="email"
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
+                placeholder="example@email.com"
                 required
-                className="md:w-7/12 w-full rounded-full h-14 px-10 transition-all duration-300 focus:outline-none focus:ring focus:ring-indigo-600"
+                icon={CiMail}
+                inputClassName="h-14 rounded-2xl  focus:ring-4 focus:ring-primary/10"
               />
-              <input
+            </div>
+
+            <div>
+              <Input
+                label="نام  رمز عبور"
+                name="password"
+                value={password}
                 type="password"
-                name="pswd"
+               
+                autoComplete={isLogin ? "current-password" : "new-password"}
                 onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                placeholder="Password"
+                placeholder="رمز عبور خود را وارد کن"
                 required
-                className="md:w-7/12 w-full rounded-full h-14 px-10 transition-all duration-300 focus:outline-none focus:ring focus:ring-indigo-600"
+                minLength={6}
+                icon={CiLock}
+                inputClassName="h-14 rounded-2xl  focus:ring-4 focus:ring-primary/10"
               />
-              <Button type="submit">Sign up</Button>
-            </div>
-          </form>
-        </div>
-      )}
 
-      {/* فرم لاگین */}
-      {isLogin && (
-        <div className="w-full h-full">
-          <form
-            className="w-full flex flex-col items-center justify-center lg:mt-40 md:mt-10 mt-0"
-            onSubmit={handleLogin}
-          >
-            <div className="flex flex-col justify-center items-center gap-10 bg-indigo-300 md:w-8/12 w-full px-2 rounded-xl self-center h-screen md:h-[600px]">
-              <Button onClick={handleClick} type="formbtn">
-                Login
-              </Button>
-
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required=""
-                className="md:w-7/12 w-full rounded-full h-14 px-10 transition-all duration-300 focus:outline-none focus:ring focus:ring-indigo-600"
-              />
-              <input
-                type="password"
-                name="pswd"
-                placeholder="Password"
-                value={password}
-                required=""
-                className="md:w-7/12 w-full rounded-full h-14 px-10 transition-all duration-300 focus:outline-none focus:ring focus:ring-indigo-600"
-              />
-              <Button type="submit">Login</Button>
+             
+             
             </div>
+
+            <Button type="submit">
+              {isLogin ? "ورود به حساب" : "ساخت حساب"}
+            </Button>
           </form>
+
+          <p className="mt-6 text-center text-sm text-text-muted">
+            {isLogin ? "هنوز حساب نداری؟" : "قبلاً ثبت‌نام کرده‌ای؟"}
+
+            <button
+              type="button"
+              onClick={handleModeChange}
+              className="mr-1 font-semibold text-primary transition-colors hover:text-primary-hover"
+            >
+              {isLogin ? "ثبت‌نام کن" : "وارد شو"}
+            </button>
+          </p>
+
+          <div className="mt-6 border-t border-border pt-5">
+            <Link
+              to="/shop"
+              className="flex items-center justify-center gap-2 text-sm text-text-muted transition-colors hover:text-primary"
+            >
+              ادامه خرید بدون ورود
+              <HiOutlineArrowLeft size={17} />
+            </Link>
+          </div>
         </div>
-      )}
-    </div>
+      </section>
+    </main>
   );
 }
 

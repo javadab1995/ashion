@@ -1,29 +1,54 @@
+
 import { Link, useNavigate } from "react-router-dom";
 
-function LinkButton({ children, to, type }) {
-    const navigate = useNavigate();
-    const className = "text-xl text-indigo-950 md:hover:border-b-2   border-indigo-400 md:text-xl hover:h-10  sm:text-lg px-1 py-2 flex md:block gap-2"
+function LinkButton({
+  children,
+  to,
+  type = "default",
+  className = "",
+  onClick,
+}) {
+  const navigate = useNavigate();
 
-  if (to === "-1") return <button className={className} onClick={() => navigate(-1)}></button>;
-  if (type === "primary") return (
-    <Link
-      to={to}
-      className="text-indigo-950 font-link border-b border-b-orange-700 text-xl font-medium uppercase mt-10 linkbutton"
-    >
-      {children}
-    </Link>
-  );
-  if (type === "submit") return (
-    <Link
-      to={to}
-      className="text-indigo-950 font-link border-4 border-orange-700 text-xl font-medium uppercase mt-2 mb-10 linkbutton px-4 py-2 hover:text-orange-50 hover:bg-orange-700 hover:rounded-lg transition-all duration-300 text-center  "
-    >
-      {children}
-    </Link>
-  );
-  
+  const baseClass =
+    "inline-flex items-center justify-center gap-2 mt-2 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface";
+
+  const variants = {
+    default:
+      "rounded-lg px-3 py-2 text-text-h hover:bg-primary-bg hover:text-primary",
+
+    primary:
+      "rounded-lg border-b border-primary px-1 py-2 text-primary hover:border-primary-hover hover:text-primary-hover",
+
+    submit:
+      "rounded-xl border border-primary bg-primary px-5 py-2.5 text-text-inverse hover:bg-primary-hover",
+
+    back:
+      "rounded-lg px-3 py-2 text-text-muted hover:bg-surface-alt hover:text-text-h",
+  };
+
+  const classes = `${baseClass} ${variants[type] ?? variants.default} ${className}`;
+
+  if (to === "-1") {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          if (onClick) {
+            onClick();
+          } else {
+            navigate(-1);
+          }
+        }}
+        className={classes}
+      >
+        {children}
+      </button>
+    );
+  }
+
   return (
-      <Link to={to} className={className}>
+    <Link to={to ?? "/"} onClick={onClick} className={classes}>
       {children}
     </Link>
   );

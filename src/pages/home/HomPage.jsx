@@ -8,7 +8,7 @@ import InistgramLink from "./InistgramLink"
 import ServiceSection from "./ServiceSection"
 import { getProduct} from "../../services/apiShop"
 import { useLoaderData, useNavigation } from "react-router-dom"
-import NewProducts from "./NewProducts"
+import NewProducts from "../home/NewProducts"
 import Loader from "../../ui/Loader"
 import MobileHeader from "../../ui/MobileHeder"
 
@@ -26,15 +26,14 @@ function HomPage() {
         <main >
             {isLoading && <Loader />}
             
-            <Header  />
-            <MobileHeader />
+           
             <Categories />
             <NewProducts shop={product} />
             <BannerSlider />
             <DiscountBanner />
             <ServiceSection />
             <InistgramLink />
-            <Footer />
+            
            
         </main>
     )

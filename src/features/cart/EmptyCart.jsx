@@ -1,17 +1,34 @@
-import Logo from "../../ui/Logo";
+
+import { Link } from "react-router-dom";
+import { CiShoppingCart } from "react-icons/ci";
 
 function EmptyCart() {
-    return (
-      <div className="flex flex-col justify-center items-center text-center h-[600px] text-9xl font-present ">
-        <p className="uppercase text-xl font-bold text-pink-700 ">
-          press 👇🏻 back to Home{" "}
-        </p>
-        <div className="img p-8 mt-8">
-          <Logo />
-        </div>
-        <h2 className="text-indigo-800">OH, cart is Empty! </h2>
+  return (
+    <section
+      dir="rtl"
+      className="mx-auto flex w-full max-w-md flex-col items-center rounded-3xl border border-border bg-surface px-5 py-10 text-center shadow-card sm:px-10 sm:py-12"
+    >
+      <div className="flex h-24 w-24 items-center justify-center rounded-full bg-primary-bg text-primary">
+        <CiShoppingCart size={52} strokeWidth={1.2} />
       </div>
-    );
+
+      <h1 className="mt-6 text-xl font-bold text-text-h sm:text-2xl">
+        سبد خریدت خالیه!
+      </h1>
+
+      <p className="mt-3 max-w-xs text-sm leading-7 text-text-muted">
+        هنوز محصولی به سبد خرید اضافه نکردی. محصولات فروشگاه رو ببین و چیزی که دوست داری انتخاب کن.
+      </p>
+
+      <Link
+        to="/shop"
+        className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-text-inverse transition-colors hover:bg-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 sm:w-auto"
+      >
+        مشاهده محصولات
+      </Link>
+    </section>
+  );
 }
 
-export default EmptyCart
+export default EmptyCart;
+

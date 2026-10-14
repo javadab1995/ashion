@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
 
+
 function Logo() {
     return (
         <Link to="/">
-            <img src="./logo.png" alt="logo" />
+            <img src="/images/logo.png" alt="logo" />
         </Link>
     )
 }

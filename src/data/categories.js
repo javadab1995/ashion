@@ -1,0 +1,66 @@
+
+const categories = [
+  {
+    id: 1,
+    title: "پوشاک زنانه",
+    slug: "women",
+    image: "/images/category-1.jpg",
+    description: "جدیدترین انتخاب‌ها برای استایل روزمره و خاص",
+    featured: true,
+    enabled: true,
+    position: 1,
+  },
+  {
+    id: 2,
+    title: "پوشاک مردانه",
+    slug: "men",
+    image: "/images/category-2.jpg",
+    description: "انتخاب‌هایی برای استایل ساده و شیک",
+    featured: false,
+    enabled: true,
+    position: 2,
+  },
+  {
+    id: 20,
+    title: "پوشاک مردانه",
+    slug: "men",
+    image: "/images/category-2.jpg",
+    description: "انتخاب‌هایی برای استایل ساده و شیک",
+    featured: false,
+    enabled: true,
+    position: 2,
+  },
+  {
+    id: 3,
+    title: "پوشاک کودک",
+    slug: "kids",
+    image: "/images/category-3.jpg",
+    description: "لباس‌های دوست‌داشتنی برای کوچولوها",
+    featured: false,
+    enabled: true,
+    position: 3,
+  },
+  {
+    id: 4,
+    title: "آرایشی و بهداشتی",
+    slug: "cosmetics",
+    image: "/images/category-4.jpg",
+    description: "محصولات زیبایی برای مراقبت روزانه",
+    featured: false,
+    enabled: true,
+    position: 4,
+  },
+  {
+    id: 5,
+    title: "اکسسوری",
+    slug: "accessories",
+    image: "/images/category-5.jpg",
+    description: "جزئیات کوچک با تأثیر بزرگ در استایل",
+    featured: false,
+    enabled: true,
+    position: 5,
+  },
+];
+
+export default categories;
+

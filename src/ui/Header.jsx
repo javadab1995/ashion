@@ -1,76 +1,145 @@
-import Logo from "./Logo"
-import LinkButton from "./LinkButton"
-import Search from "./Search"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { CiHeart, CiShoppingCart, CiUser } from "react-icons/ci";
-import { Link } from "react-router-dom";
-import { HiBars3 } from "react-icons/hi2";
-import { useSelector } from "react-redux";
+import { HiBars3, HiOutlineArrowLeft } from "react-icons/hi2";
+
+import Logo from "./Logo";
+import Search from "./Search";
+
+
 import { getTotalCartQuantity } from "../features/cart/cartSlice";
 import { getTotalFavouritsQuantity } from "../features/favourites/FavouritesSlice";
-import { useState } from "react";
-import Modal from "./Modal";
-
-
-
+import SwitchTheme from "./SwitchTheme";
+import MobileMenu from "./MobileMenu";
+import { toPersianDigits } from "../helpers/number";
 
 function Header() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-    const { isAuthenticated, username } = useSelector((state) => state.user);
+
+  const { isAuthenticated, username } = useSelector((state) => state.user);
+
   const totalCartQuantity = useSelector(getTotalCartQuantity);
-  const totalFavouritQuantity = useSelector(getTotalFavouritsQuantity)
+  const totalFavouriteQuantity = useSelector(getTotalFavouritsQuantity);
 
-  if (isOpenModal) return <Modal setIsOpenModal={setIsOpenModal} />;
   
+
   return (
-   
-    <div className="flex justify-between sm:px-4 sm:py-3 py-4 px-2 items-center grow bg-white shadow-md shadow-gray-500/50">
-      <button
-        onClick={() => setIsOpenModal((show) => !show)}
-        className="lg:hidden block"
-      >
-        <HiBars3 size="32px" />
-      </button>
-       
-  
-      <ul className="space-x-6  hidden lg:flex ">
-        <LinkButton to="/">Home</LinkButton>
-        <LinkButton to="/shop">Shop</LinkButton>
-        <LinkButton to="/aboutus">AboutUs</LinkButton>
-        <LinkButton to="/contactus">ContactUs</LinkButton>
-      </ul>
-      <div className="lg:block hidden">
-        <Logo />
-      </div>
-      <div className="flex gap-10 ">
-        <Search />
+    <>
+      <div dir="rtl" className="sticky top-0 z-40 bg-bg text-text-h">
+        {/* نوار اطلاع‌رسانی */}
+        <div className="flex min-h-9 items-center justify-center bg-primary px-4 py-1 text-xs text-text-inverse">
+          <p className="flex flex-wrap items-center justify-center gap-x-2">
+            مجموعه تازه فصل رسید
+            <span className="opacity-50">|</span>
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-1 underline underline-offset-4 transition-opacity hover:opacity-80"
+            >
+              کشف محصولات
+              <HiOutlineArrowLeft size={13} />
+            </Link>
+          </p>
+        </div>
 
-        <ul className="md:flex gap-x-3 items-center hidden  ">
-          {isAuthenticated ? (
-            <div>
-              <p> {username
-              }</p>
-              <Link to="/account"></Link>
+        {/* هدر اصلی */}
+        <header className="border-b border-border bg-surface">
+          <div className="mx-auto grid min-h-19 md:px-0 px-4  max-w-7xl grid-cols-[1fr_auto_1fr] items-center">
+            {/* منوی دسکتاپ */}
+            <nav className="hidden items-center gap-7 lg:flex">
+              <LinkButton to="/">خانه</LinkButton>
+              <LinkButton to="/shop">فروشگاه</LinkButton>
+              <LinkButton to="/aboutus">درباره ما</LinkButton>
+              <LinkButton to="/contactus">تماس با ما</LinkButton>
+            </nav>
+
+            {/* منوی موبایل */}
+            <button
+              type="button"
+              onClick={() => setIsOpenModal(true)}
+              aria-label="باز کردن منو"
+              aria-expanded={isOpenModal}
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-primary-bg hover:text-primary lg:hidden"
+            >
+              <HiBars3 size={25} />
+            </button>
+
+            {/* لوگو */}
+            <div className="flex justify-center">
+              <Logo />
             </div>
-          ) : (
-            <Link to="/login"><CiUser size={25} /></Link>
+
+            {/* ابزارها */}
+            <div className="flex items-center justify-end gap-1 sm:gap-3">
+              <div className="md:block hidden">
+                <Search />
+              </div>
+
+              <HeaderIcon
+                to={isAuthenticated ? "/account" : "/login"}
+                label={isAuthenticated ? "حساب کاربری" : "ورود به حساب"}
+              >
+                <CiUser size={25} />
+              </HeaderIcon>
+
+              <HeaderIcon
+                to="/favourites"
+                label="علاقه‌مندی‌ها"
+                count={totalFavouriteQuantity}
+              >
+                <CiHeart size={26} />
+              </HeaderIcon>
+
+              <HeaderIcon to="/cart" label="سبد خرید" count={totalCartQuantity}>
+                <CiShoppingCart size={26} />
+              </HeaderIcon>
+              <SwitchTheme />
+            </div>
+          </div>
+
+          {/* نام کاربر در موبایل */}
+          {isAuthenticated && username && (
+            <div className="border-t border-border px-4 py-2 text-center text-xs text-text-muted lg:hidden">
+              خوش آمدی، {username}
+            </div>
           )}
-          <Link to="/favourites" className="hover:text-red-700 relative ">
-            <CiHeart size="25px" />
-            <div className="absolute rounded-full w-[15px] h-[15px] bg-red-700 text-center top-[-10px] right-3 text-red-50 text-[8px] ">
-              {totalFavouritQuantity}
-            </div>
-          </Link>
-          <Link to="/cart" className="hover:text-red-700 relative">
-            <CiShoppingCart size="25px" />
-            <div className="absolute rounded-full w-[15px] h-[15px] bg-red-700 text-center top-[-10px] right-3 text-red-50 text-[10px]">
-              {totalCartQuantity}{" "}
-            </div>
-          </Link>
-        </ul>
+        </header>
       </div>
-    </div>
+
+      {isOpenModal && <MobileMenu onClose={() => setIsOpenModal(false)} />}
+    </>
   );
 }
 
-export default Header
+function LinkButton({ to, children }) {
+  return (
+    <Link
+      to={to}
+      className="relative whitespace-nowrap py-2 text-[13px] text-text transition-colors duration-200 after:absolute after:bottom-0 after:right-0 after:h-0.5 after:w-0 after:rounded-full after:bg-primary after:transition-all hover:text-primary hover:after:w-full"
+    >
+      {children}
+    </Link>
+  );
+}
+
+function HeaderIcon({ to, label, count = 0, children }) {
+  return (
+    <Link
+      to={to}
+      aria-label={label}
+      title={label}
+      className="relative md:flex hidden h-10 w-10 shrink-0 items-center justify-center rounded-full text-text-h transition-colors hover:bg-primary-bg hover:text-primary"
+    >
+      {children}
+
+      {count > 0 && (
+        <span className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-medium leading-none text-text-inverse">
+          {count > 99 ? "۹۹+" : toPersianDigits(count)}
+        </span>
+      )}
+    </Link>
+  );
+}
+
+export default Header;

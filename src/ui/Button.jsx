@@ -1,78 +1,69 @@
-function Button({ children, type, goToSlide, currentIndex, onClick }) {
-    const className = "w-3 h-3 rounded-full border-none cursor-pointer ";
-    const blue = " oklch(.511 .262 276.966)";
-  const lightgray = " oklch(.93 .034 272.788)";
-  
-    if (type === "dot")
-      return (
-        <>
-          {[0, 1, 2].map((index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={className}
-              style={{
-                backgroundColor: currentIndex === index ? blue : lightgray,
-              }}
-            ></button>
-          ))}
-        </>
-    );
-  
-  if (type === "formbtn") return (
-    <button
-      className="rounded-br-[50%] rounded-bl-[50%] px-10 py-3 bg-slate-50 text-2xl font-bold text-indigo-950 hover:text-indigo-300 " 
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
 
-  if (type === "back")
-    return (
-      <button
-        onClick={onClick}
-        className="text-orange-800 text-center img flex  p-4 font-bold  gap-2 "
-      >
-        {children}
-      </button>
-    );
-  
-  if (type === "small") return (
-    <button
-      className=" w-full bg-lime-700  text-base font-bold text-green-50 hover:bg-lime-600 py-2 flex justify-center "
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-  
-  if (type === "submit") return (
-    <button
-      className="px-8 py-2 rounded-xl text-indigo-950 my-auto text-lg font-semibold  border-2 border-indigo-700  hover:bg-indigo-700 hover:text-indigo-50"
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-  
-  
-  if (type === "primary") return (
-    <button
-      className="px-8 py-2 rounded-xl bg-indigo-50 my-auto text-lg text-indigo-950 font-semibold  border-2 border-indigo-700  hover:bg-indigo-500 hover:border-indigo-500 hover:text-indigo-50"
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-  
-  
+function Button({
+  children,
+  type = "primary",
+  goToSlide,
+  currentIndex,
+  onClick,
+  disabled = false,
+  className = "",
+  htmlType = "button",
+}) {
+  const baseClass =
+    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-50";
 
+  const variants = {
+    primary:
+      "border  border-primary bg-primary px-6 py-3 text-text-inverse shadow-btn hover:bg-primary-hover",
+
+    secondary:
+      "border border-primary-border bg-primary-bg px-6 py-3 text-primary hover:bg-primary-border",
+
+    submit:
+      "border w-full  border-primary bg-primary px-6 py-3 text-text-inverse shadow-btn hover:bg-primary-hover",
+
+    formbtn:
+      "rounded-b-2xl bg-surface-alt px-7 py-3 text-base font-semibold text-text-h hover:bg-primary-bg hover:text-primary",
+
+    back: "px-4 py-3 text-sm font-semibold text-primary hover:bg-primary-bg",
+
+    small:
+      "w-full rounded-lg bg-primary px-4 py-2.5 text-sm text-text-inverse hover:bg-primary-hover",
+
+    dot: "h-3 w-3 rounded-full border-0 p-0",
+  };
+
+  if (type === "dot") {
     return (
-        <button>
-           {children} 
-        </button>
-    )
+      <div className={`flex items-center justify-center gap-2 ${className}`}>
+        {[0, 1, 2].map((index) => (
+          <button
+            key={index}
+            type="button"
+            aria-label={`رفتن به اسلاید ${index + 1}`}
+            aria-current={currentIndex === index ? "true" : undefined}
+            onClick={() => goToSlide?.(index)}
+            className={`${baseClass} ${variants.dot} ${
+              currentIndex === index
+                ? "bg-primary"
+                : "bg-border hover:bg-primary-border"
+            }`}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type={type === "submit" ? "submit" : htmlType}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseClass} ${variants[type] ?? variants.primary} ${className}`}
+    >
+      {children}
+    </button>
+  );
 }
 
-export default Button
+export default Button;

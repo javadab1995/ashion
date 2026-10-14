@@ -1,43 +1,83 @@
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi2"
 
+import {
+  HiChevronDoubleLeft,
+  HiChevronDoubleRight,
+} from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
+import { toPersianDigits } from "../helpers/number";
 
-function Pagination({ products }) {
-    const [searchParams, setSearchParams] = useSearchParams();
+function Pagination({ totalItems, itemsPerPage = 8 }) {
+  const [searchParams, setSearchParams] = useSearchParams();
 
-    const currentPage = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
+  const pageCount = Math.ceil(totalItems / itemsPerPage);
+  const pageParam = Number(searchParams.get("page"));
 
-    const pageCount = Math.ceil(products.length / 10)
+  const currentPage =
+    Number.isInteger(pageParam) && pageParam > 0
+      ? Math.min(pageParam, Math.max(pageCount, 1))
+      : 1;
 
-    function nextPage() {
-        const next = currentPage === pageCount ? currentPage : currentPage + 1
+  if (pageCount <= 1) return null;
 
-        searchParams.set("page", next)
-        setSearchParams(searchParams)
+  const firstItem = (currentPage - 1) * itemsPerPage + 1;
+  const lastItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+  function goToPage(page) {
+    const nextPage = Math.max(1, Math.min(page, pageCount));
+    const nextParams = new URLSearchParams(searchParams);
+
+    if (nextPage === 1) {
+      nextParams.delete("page");
+    } else {
+      nextParams.set("page", String(nextPage));
     }
-    function prevPage() {
-        const prev = currentPage === 1 ? currentPage : currentPage - 1;
-        searchParams.set("page", prev)
-        setSearchParams(searchParams)
-    }
-    if (pageCount <= 1) return null;
-    return (
-      <div className="mt-10 text-lg font-light text-indigo-950 p-4  border border-indigo-700 rounded-md">
-        <p className=" px-8">
-                 <span className="text-red-700 font-bold p-2">{currentPage === pageCount ? products.length : (currentPage  ) * (11)  }</span> as
-                <span className="text-red-800 font-bold p-2">{currentPage * 1 }</span> of
-                <span className="p-2 text-indigo-700 font-bold ">{products.length }</span> results
-        </p>
-        <div className="flex w-full justify-between mt-[-22px] ">
-          <button onClick={prevPage}>
-            <HiChevronDoubleLeft />
-          </button>
-          <button onClick={nextPage}>
-            <HiChevronDoubleRight />
-          </button>
-        </div>
+
+    setSearchParams(nextParams);
+  }
+
+  return (
+    <nav
+      dir="rtl"
+      aria-label="صفحه‌بندی محصولات"
+      className="mt-8 flex flex-col gap-4 rounded-2xl border border-border bg-surface p-4 shadow-card sm:flex-row sm:items-center sm:justify-between sm:px-6"
+    >
+      <p className="text-sm text-text-muted">
+        نمایش{" "}
+        <span className="font-bold text-primary">{toPersianDigits(firstItem)}</span>
+        {" تا "}
+        <span className="font-bold text-primary">{toPersianDigits(lastItem)}</span>
+        {" از "}
+        <span className="font-bold text-text-h">{toPersianDigits(totalItems)}</span>
+        {" محصول"}
+      </p>
+
+      <div className="flex items-center justify-between gap-3 sm:justify-end">
+        <button
+          type="button"
+          onClick={() => goToPage(currentPage - 1)}
+          disabled={currentPage === 1}
+          aria-label="صفحه قبلی"
+          className="flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-text-h transition-colors hover:border-primary hover:bg-primary-bg hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <HiChevronDoubleRight size={20} />
+        </button>
+
+        <span className="min-w-24 text-center text-sm font-semibold text-text-h">
+          صفحه {toPersianDigits(currentPage)} از {toPersianDigits(pageCount)}
+        </span>
+
+        <button
+          type="button"
+          onClick={() => goToPage(currentPage + 1)}
+          disabled={currentPage === pageCount}
+          aria-label="صفحه بعدی"
+          className="flex size-10 items-center justify-center rounded-xl border border-border bg-surface text-text-h transition-colors hover:border-primary hover:bg-primary-bg hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <HiChevronDoubleLeft size={20} />
+        </button>
       </div>
-    );
+    </nav>
+  );
 }
 
-export default Pagination
+export default Pagination;
