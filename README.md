@@ -1,8 +1,21 @@
-# React + Vite
+# Ashion Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A front-end e-commerce store built with React. The design is inspired by the Ashion template; product images and banners come from that template.
 
-Currently, two official plugins are available:
+## Features
+- Product listing with filtering, search and pagination (kept in the URL)
+- Product details page
+- Shopping cart
+- Checkout and order pages
+- User registration and login
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Product data comes from a mock API (real HTTP requests, fake data). There is no payment step.
+
+## Tech stack
+React, Vite, Tailwind CSS, Redux Toolkit, TanStack Query, custom hooks
+
+## Live demo
+https://ashionstore.netlify.app/
+
+## Credits
+Design inspiration, images and banners: Ashion template.
